@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/reducer';
 import { setProducts } from '../store/slices/products.slice';
+import { useEffect } from 'react';
 
 
 const useProducts = () => {
@@ -16,9 +17,13 @@ const useProducts = () => {
       console.log('Error fetching products: ', error);
     }
   };
-  return (
-    <div>useProducts</div>
-  )
-}
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+  return {
+    products,
+  };
+};
 
 export default useProducts;

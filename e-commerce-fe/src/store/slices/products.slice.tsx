@@ -5,12 +5,16 @@ interface ProductsState {
     products: Product[];
 }
 
+const initialState: ProductsState = {
+    products: [],
+};
+
 const productsSlice = createSlice({
     name: 'products',
-    initialState: { } as ProductsState,
+    initialState,
     reducers: {
-        setProducts: (state, action: PayloadAction<{ products: Product[];}>) => {
-            state = action.payload;
+        setProducts: (state, action: PayloadAction<Product[]>) => {
+            state.products = action.payload;
         },
     },
 
