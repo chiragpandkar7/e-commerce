@@ -14,12 +14,29 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<Product>) => {
-      state.items.push(action.payload);
+      const index = state.items.findIndex(item => item.id === action.payload.id);
+      if (index === -1) {
+        state.items.push({ ...action.payload, amount: 1 }); // Add amount field when adding to cart
+      } else {
+        state.items[index].amount++; // Increase amount if item already exists in cart
+      }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
       const index = state.items.findIndex(item => item.id === action.payload);
       if (index !== -1) {
         state.items.splice(index, 1);
+      }
+    },
+    increaseAmount: (state, action: PayloadAction<number>) => {
+      const index = state.items.findIndex(item => item.id === action.payload);
+      if (index !== -1) {
+        state.items[index].amount++;
+      }
+    },
+    decreaseAmount: (state, action: PayloadAction<number>) => {
+      const index = state.items.findIndex(item => item.id === action.payload);
+      if (index !== -1 && state.items[index].amount > 1) {
+        state.items[index].amount--;
       }
     },
     clearCart: (state) => {
@@ -28,5 +45,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, increaseAmount, decreaseAmount, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

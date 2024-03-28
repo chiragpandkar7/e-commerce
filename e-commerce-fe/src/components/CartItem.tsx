@@ -1,21 +1,29 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
 import { Product } from '../Types/product.types';
-import { Wrapper } from './cartItem.style';
+import { useDispatch } from 'react-redux';
+import { increaseAmount, decreaseAmount } from '../store/slices/cart.slice';
+import { Wrapper } from '../styles/cartItem.style';
 
 type Props = {
   item: Product;
   addToCart: (clickedItem: Product) => void;
-  removeFromCart: (id: number) => void;
+  removeFromCart: (id: number) => void; 
 };
 
-const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => {
-  const handleAddToCart = () => {
-    addToCart(item);
-  };
+const CartItem: React.FC<Props> = ({ item, removeFromCart }) => {
+  const dispatch = useDispatch();
 
   const handleRemoveFromCart = () => {
     removeFromCart(item.id);
+  };
+
+  const handleIncreaseAmount = () => {
+    dispatch(increaseAmount(item.id));
+  };
+
+  const handleDecreaseAmount = () => {
+    dispatch(decreaseAmount(item.id));
   };
 
   return (
@@ -31,7 +39,7 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => {
             size="small"
             disableElevation
             variant="contained"
-            onClick={handleRemoveFromCart}
+            onClick={handleDecreaseAmount}
           >
             -
           </Button>
@@ -40,13 +48,21 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => {
             size="small"
             disableElevation
             variant="contained"
-            onClick={handleAddToCart}
+            onClick={handleIncreaseAmount}
           >
             +
           </Button>
         </div>
       </div>
       <img src={item.images[0]} alt={item.title} />
+      <Button
+        size="small"
+        disableElevation
+        variant="contained"
+        onClick={handleRemoveFromCart}
+      >
+        Remove
+      </Button>
     </Wrapper>
   );
 };

@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartSharpIcon from '@mui/icons-material/ShoppingCartSharp';
+import useProducts from "../hooks/useProducts";
 
 const pages = [
   { name: "Home", path: "/home" },
@@ -20,6 +21,7 @@ const pages = [
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
+  useProducts();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );

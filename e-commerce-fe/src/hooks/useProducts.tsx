@@ -11,8 +11,8 @@ const useProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('https://dummyjson.com/products');
-      dispatch(setProducts(response.data.products));
+      const response = await axios.get('http://localhost:8000/products');
+      dispatch(setProducts(response.data));
     } catch (error) {
       console.log('Error fetching products: ', error);
     }

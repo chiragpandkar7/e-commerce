@@ -1,8 +1,9 @@
-import useProducts from '../hooks/useProducts';
+import { useSelector } from 'react-redux';
 import ProductCard from './ProductCard';
+import { RootState } from '../store/reducer';
 
 const Products = () => {
-  const { products } = useProducts();
+  const { products } = useSelector((state: RootState) => state.products);
 
   if (!products) {
     return <div>Loading...</div>;
